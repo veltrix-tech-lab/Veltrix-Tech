@@ -269,7 +269,8 @@ body, html {
     z-index: 2000;
 }
 
-#preview-section .overlay-content {
+#preview-section 
+.overlay-content {
     background: #1e293b;
     width: 95%;
     max-width: 1400px;
@@ -383,28 +384,6 @@ body, html {
     cursor: pointer;
 }
 
-/* PREVIEW SECTION */
-#preview-section {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(2, 6, 23, 0.98);
-    backdrop-filter: blur(15px);
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 9000;
-}
-
-#preview-frame {
-    width: 95%; height: 80vh;
-    border: none;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-}
-
 /* CONTACT & FOOTER */
 .contact { 
     width: 100%;
@@ -451,7 +430,7 @@ footer {
     <canvas id="matrix-canvas"></canvas>
     <div class="splash-content">
         <div class="glitch-container">
-            <div class="splash-logo" data-text="AINSOFT">AIN<span>SOFT</span></div>
+            <div class="splash-logo" data-text="AINSOFT">VELTRIX<span>TECH</span></div>
         </div>
         
         <div class="system-status">
@@ -469,12 +448,25 @@ footer {
     </div>
 </div>
 
+<div id="auth-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#1e293b; padding:30px; border-radius:15px; width:350px; border:1px solid #00f2ff; text-align:center; color:white;">
+        <h2 style="margin-top:0;">Access Services</h2>
+        <p style="font-size:0.8rem; color:#94a3b8;">Enter email to save your project data.</p>
+        
+        <input type="email" id="auth-email" placeholder="Email Address" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #334155; background:#0f172a; color:white;">
+        <input type="password" id="auth-pass" placeholder="Password" style="width:100%; padding:10px; margin-bottom:20px; border-radius:5px; border:1px solid #334155; background:#0f172a; color:white;">
+        
+        <button onclick="handleAuth()" style="width:100%; background:#00f2ff; color:black; border:none; padding:12px; border-radius:5px; font-weight:bold; cursor:pointer;">SIGN IN / REGISTER</button>
+        <button onclick="document.getElementById('auth-modal').style.display='none'" style="margin-top:10px; background:none; border:none; color:#64748b; cursor:pointer; font-size:0.8rem;">Cancel</button>
+    </div>
+</div>
+
 <div id="sidebar">
     <div style="text-align: right; padding: 10px;">
         <span onclick="toggleMenu()" style="cursor:pointer; font-size: 2rem; color: #00bcd4;">&times;</span>
     </div>
     
-    <h2 style="color:#00bcd4; text-align: center;">AIN<span style="color:white;">SOFT</span></h2>
+    <h2 style="color:#00bcd4; text-align: center;">VELTRIX<span style="color:white;">TECH</span></h2>
     
     <p onclick="openTab('home')">🏠 Home</p>
     <p onclick="openTab('services')">🛠 Services</p>
@@ -489,43 +481,65 @@ footer {
             <button onclick="toggleMenu()" class="menu-btn">☰ Menu</button>
             
             <div class="hero-content">
-                <h1 style="font-size: 3.5rem; margin-bottom: 10px;">Welcome to Ainsoft Tech</h1>
+                <h1 style="font-size: 3.5rem; margin-bottom: 10px;">Welcome to Veltrix Tech</h1>
                 <p style="font-size: 1.2rem; opacity: 0.9;">We build websites, apps & secure systems.</p>
             </div>
         </section>
         
         <section class="contact" id="contact">
-            <h2>Contact Ainsoft Tech</h2>
+            <h2>Contact Veltrix Tech</h2>
             <p>Reach out instantly using WhatsApp or Email</p>
             <div class="contact-buttons">
-                <a class="email-btn" href="mailto:alphamumo39@gmail.com?subject=Website Inquiry">Email Us</a>
+                <a class="email-btn" href="mailto:ainsoftke@gmail.com?subject=Website Inquiry">Email Us</a>
                 <a class="whatsapp-btn" href="https://wa.me/254117559174" target="_blank">WhatsApp Us</a>
             </div>
         </section>
     </div>
 
-    <div id="services-tab" class="tab-content" style="display:none; padding:30px;">
-        <h2 style="text-align:center; color: var(--primary);">Our Services</h2>
-        <div class="cards">
-            <div class="card" onclick="openConfigurator('web-dev')">
-                <h3>Website Development</h3>
-                <p>Deploy high-performance digital storefronts and corporate sites.</p>
-                <span class="status-chip">Configure ➔</span>
-            </div>
+<div id="services-tab" class="tab-content" style="display:none; padding:30px;">
+    <h2 style="text-align:center; color: var(--primary);">Our Services</h2>
 
-            <div class="card" onclick="openConfigurator('web-app')">
-                <h3>Web Applications</h3>
-                <p>Architecture for complex systems and cloud-based tools.</p>
-                <span class="status-chip">Configure ➔</span>
-            </div>
+<button id="services-toggle-btn" onclick="reconnectToOrder()" style="background: #00bcd4; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin: 20px auto; display: block;">
+    Your Services
+</button>
 
-            <div class="card" onclick="openConfigurator('maintenance')">
-                <h3>Maintenance</h3>
-                <p>24/7 technical surveillance and security hardening.</p>
-                <span class="status-chip">Support ➔</span>
-            </div>
+<div id="services-module" style="display:none; padding: 20px;">
+    <div id="my-orders-container" style="margin-bottom: 20px;">
+    </div>
+
+    <div class="services-grid">
+        </div>
+</div>
+
+<div id="my-orders-container" style="display: block; margin-top: 10px;">
+</div>
+
+    <div class="cards">
+        <div class="card" onclick="openConfigurator('web-dev')">
+            <h3>Website Development</h3>
+            <p>Deploy high-performance digital storefronts and corporate sites.</p>
+            <span class="status-chip">Configure ➔</span>
+        </div>
+
+        <div class="card" onclick="openConfigurator('web-app')">
+            <h3>Web Applications</h3>
+            <p>Architecture for complex systems and cloud-based tools.</p>
+            <span class="status-chip">Configure ➔</span>
+        </div>
+
+        <div class="card" onclick="openConfigurator('maintenance')">
+            <h3>Maintenance</h3>
+            <p>24/7 technical surveillance and security hardening.</p>
+            <span class="status-chip">Support ➔</span>
+        </div>
+
+        <div class="card" onclick="openConfigurator('cyber-sec')">
+            <h3>Cyber Security</h3>
+            <p>Comprehensive audits, penetration testing, and defense.</p>
+            <span class="status-chip">Secure Now ➔</span>
         </div>
     </div>
+</div>
 
 <div id="developer-tab" class="tab-content" style="display:none;">
     <div class="dev-form-container" id="dev-auth-choice">
@@ -548,8 +562,8 @@ footer {
                 <input type="number" id="reg-id" class="dev-input" placeholder="National ID">
             </div>
             <div class="input-group">
-                <label>WhatsApp Phone</label>
-                <input type="text" id="reg-phone" class="dev-input" placeholder="Your Number">
+                <label>Phone Number</label>
+                <input type="text" id="reg-phone" class="dev-input" placeholder="+254xxxxxxxxx">
             </div>
             <div class="input-group">
                 <label>System Username</label>
@@ -585,18 +599,55 @@ footer {
     </div>
 </div>
 
-<div id="configurator-overlay" class="overlay">
-    <div class="overlay-content" style="background: #1e293b; border-radius: 20px; border: 1px solid #00bcd4;">
-        <button class="close-btn" onclick="closeConfigurator()"> EXIT </button>
+<div id="configurator-overlay" class="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(2, 6, 23, 0.85); z-index:10000; align-items:center; justify-content:center;">
+    <div class="overlay-content" style="
+        background: #1e293b; 
+        border-radius: 20px; 
+        border: 1px solid #00bcd4; 
+        padding: 30px; 
+        width: 90%; 
+        max-width: 500px; 
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    ">
+        <button class="close-btn" onclick="closeConfigurator()" style="position: absolute; top: 15px; right: 20px; background:none; border:none; color:#64748b; cursor:pointer; font-size: 1.5rem;">&times;</button>
+        
+        <h2 id="selected-module-name" style="color: white; margin: 0 0 5px 0; font-size: 1.3rem;">Project Architect</h2>
+        <p id="config-title" style="color: #00bcd4; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase;">Initializing_System...</p>
+        
+        <textarea id="project-desc" 
+            placeholder="Describe your website vision..." 
+            style="
+                width: 100%; 
+                height: 220px; 
+                background: #0f172a; 
+                color: #00f2ff; 
+                border: 1px solid #334155; 
+                border-radius: 12px; 
+                padding: 15px; 
+                font-family: 'Courier New', monospace; 
+                outline: none; 
+                resize: none; 
+                box-sizing: border-box; /* Crucial for keeping width 100% inside the box */
+                margin-bottom: 10px;
+            "></textarea>
             
-            <textarea id="project-desc" 
-                placeholder="Describe your website..." 
-                style="width: 100%; height: 250px; background: #0f172a; color: #00f2ff; border: 1px solid #334155; border-radius: 12px; padding: 15px; font-family: 'Courier New', Courier, monospace; outline: none;"></textarea>
-            
-            <button class="join-btn" style="width: 100%; margin-top: 20px; padding: 15px; font-weight: bold; letter-spacing: 2px;" onclick="generatePreview()">
-                Generate Website
-            </button>
-        </div>
+        <button class="join-btn" style="
+            width: 100%; 
+            padding: 16px; 
+            font-weight: bold; 
+            letter-spacing: 2px; 
+            cursor: pointer; 
+            background: #00bcd4; 
+            color: #020617; 
+            border: none; 
+            border-radius: 8px;
+            transition: 0.3s;
+        " onclick="generatePreview()">
+            GENERATE_PREVIEW
+        </button>
     </div>
 </div>
 
@@ -614,7 +665,7 @@ footer {
 <div id="preview-section" class="overlay">
     <span class="close-preview" onclick="closePreview()">&times;</span>
     <div style="width: 95%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <h2 style="color: white; font-size: 1.2rem;">Live Prototype</h2>
+        <h2 style="color: white; font-size: 1.2rem;">Example Website</h2>
         <div id="preview-actions">
             <button onclick="openPayment()" class="whatsapp-btn" style="padding: 8px 20px;">Search for Developer</button>
             <button class="back-link" onclick="closePreview()" style="display: inline; margin-left: 10px; color: #64748b;">Close</button>
@@ -674,8 +725,8 @@ footer {
     <div style="display:flex; height:100%; width:100%;">
         <div style="width:220px; background:#020617; padding:20px; border-right:1px solid var(--border);">
             <h2 style="color:#00bcd4;">ADMIN</h2>
-            <p onclick="showAdminTab('pending')" style="cursor:pointer; margin-top:20px; color:white;">📩 Pending Apps</p>
-            <p onclick="showAdminTab('active')" style="cursor:pointer; color:white;">✅ Active Agents</p>
+            <p onclick="showAdminTab('pending')" style="cursor:pointer; margin-top:20px; color:white;">📩 Applications</p>
+            <p onclick="showAdminTab('active')" style="cursor:pointer; color:white;">✅ Agents</p>
             <p onclick="showAdminTab('jobs')" style="cursor:pointer; color:white;">📋 Jobs</p>
             <button onclick="closeAdmin()" class="back-link" style="margin-top:30px; color:red; border:none; background:none;">Logout</button>
         </div>
@@ -700,26 +751,47 @@ footer {
 </div>
 
 <footer>
-    <p>© 2026 Ainsoft Tech | All rights reserved</p>
+    <p>© 2026 Veltrix Tech | All rights reserved</p>
 </footer>
-<script>
-// --- GLOBAL DATA ---
-let agents = JSON.parse(localStorage.getItem("agents")) || [];
-let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
-let selectedService = "";
-let currentModule = "";
-let currentAgentName = localStorage.getItem("currentAgent") || "";
-const ADMIN_PASSWORD = "ainsoft123";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
+  // Import Database tools
+  import { getDatabase, ref, set, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
 
-// --- UI NAVIGATION ---
+  const firebaseConfig = {
+    apiKey: "AIzaSyACnnoXrvMZ1Iwj7EVSk17Eg5agft173tU",
+    authDomain: "veltrix-terminal.firebaseapp.com",
+    projectId: "veltrix-terminal",
+    storageBucket: "veltrix-terminal.firebasestorage.app",
+    messagingSenderId: "23925379042",
+    appId: "1:23925379042:web:ec361f50243c585ab033bb",
+    measurementId: "G-NVNX9TSBT5"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // EXPOSE TO WINDOW (Important for your existing functions)
+  window.db = db;
+window.dbRef = ref;
+window.dbSet = set;
+window.dbPush = push;
+window.dbOnValue = onValue;
+window.dbUpdate = update;
+window.dbRemove = remove; //
+  // Start listening for data immediately
+  listenToFirebaseJobs();
+</script>
+<script>
+    let currentModule = "";
+    const ADMIN_PASSWORD = "veltrix2026";
+// --- NAVIGATION ---
 function toggleMenu() {
     const sidebar = document.getElementById("sidebar");
-    const menuBtn = document.querySelector(".menu-btn"); // Selects your menu button
-    
-    // Toggle the sidebar
+    const menuBtn = document.querySelector(".menu-btn"); 
     sidebar.classList.toggle("active");
-    
-    // Toggle the visibility of the button
     if (sidebar.classList.contains("active")) {
         menuBtn.classList.add("hidden");
     } else {
@@ -730,8 +802,6 @@ function toggleMenu() {
 function updateMenuVisibility(tabName) {
     const menuBtn = document.getElementById('menu-btn');
     if (!menuBtn) return;
-
-    // List the tab names where the menu SHOULD be hidden
     const hideOnTabs = ['tab-agents', 'admin-active-tab', 'registered-agents'];
 
     if (hideOnTabs.includes(tabName)) {
@@ -740,8 +810,6 @@ function updateMenuVisibility(tabName) {
         menuBtn.style.display = 'block';
     }
 }
-
-// Integrate this into your existing showTab function
 function showTab(tabId) {
     // 1. Hide all tabs
     document.querySelectorAll('.tab-content').forEach(tab => {
@@ -749,24 +817,27 @@ function showTab(tabId) {
     });
 
     // 2. Show the selected tab
-    const selectedTab = document.getElementById(tabId);
-    if (selectedTab) {
-        selectedTab.style.display = 'block';
+    const activeTab = document.getElementById(tabId);
+    if (activeTab) {
+        activeTab.style.display = 'block';
     }
 
-    // 3. RUN THE VISIBILITY CHECK
-    updateMenuVisibility(tabId);
+    // 3. Update navigation menu active states (if you have them)
+    if (typeof updateMenuVisibility === "function") {
+        updateMenuVisibility(tabId);
+    }
+
+    // 4. THE CORRECTION: Trigger the Order Tracker if on services
+    if (tabId === 'services-tab') {
+        renderMyOrders();
+    }
 }
 
-// Update your openTab to also close the menu and show the button
 function openTab(tabName) {
-    // 1. Hide ALL tabs first to ensure a clean slate
     const allTabs = document.getElementsByClassName("tab-content");
     for (let t of allTabs) {
         t.style.display = "none";
     }
-
-    // 2. Sidebar Logic (Keep your existing sidebar close logic)
     const sidebar = document.getElementById("sidebar");
     const menuBtn = document.querySelector(".menu-btn");
     if(sidebar) sidebar.classList.remove("active");
@@ -836,27 +907,23 @@ const projectData = {
 
 // --- CONFIGURATOR LOGIC ---
 function openConfigurator(type) {
-    // 1. Show the overlay
     const overlay = document.getElementById('configurator-overlay');
-    if (overlay) {
-        overlay.style.display = 'flex';
-    }
+    if (overlay) overlay.style.display = 'flex';
 
-    // 2. Update the Title based on what they clicked
+    // Update the Titles
     const titleElement = document.getElementById('config-title');
-    if (titleElement) {
-        const titleMap = {
-            'web-dev': 'WEBSITE_DEVELOPMENT_BUILDER',
-            'web-app': 'WEB_APPLICATION_ARCHITECT',
-            'maintenance': 'SECURITY_MAINTENANCE_CONFIG'
-        };
-        titleElement.innerText = titleMap[type] || "SYSTEM_CONFIGURATOR";
-    }
+    const nameElement = document.getElementById('selected-module-name');
+    
+    const titleMap = {
+        'web-dev': 'WEBSITE_DEVELOPMENT_BUILDER',
+        'web-app': 'WEB_APPLICATION_ARCHITECT',
+        'maintenance': 'SECURITY_MAINTENANCE_CONFIG'
+    };
 
-    // 3. Set the current module globally so generatePreview() knows what it is
-    currentModule = type;
+    if (titleElement) titleElement.innerText = titleMap[type] || "SYSTEM_CONFIGURATOR";
+    if (nameElement) nameElement.innerText = "Custom " + type.replace('-', ' ').toUpperCase();
 
-    // 4. Lock background scroll
+    currentModule = type; 
     document.body.style.overflow = 'hidden';
 }
 
@@ -876,7 +943,7 @@ function closeConfigurator() {
     document.body.style.overflow = 'auto';
 }
 
-// --- PREVIEW GENERATOR (The "Example Webs" Logic) ---
+// --- PREVIEW GENERATOR ---
 function generatePreview() {
     const desc = document.getElementById('project-desc').value.trim();
     if (!desc) {
@@ -1058,7 +1125,7 @@ a, button, .btn-primary, .btn-secondary, .serv-card {
     </section>
 
     <footer>
-        <span class="footer-logo">AINSOFT // TECH</span>
+        <span class="footer-logo">Veltrix Tech</span>
         <p class="copy">© 2026 ${currentModule} Built via Veltrix Engine. Private Enterprise License.</p>
     </footer>
 </body>
@@ -1066,150 +1133,501 @@ a, button, .btn-primary, .btn-secondary, .serv-card {
 
     document.getElementById("preview-frame").srcdoc = siteContent;
 
-    // Update WhatsApp link / UI
-    const payBtn = document.getElementById("pay-btn");
-    if(payBtn) payBtn.innerText = "Pay to Unlock Website";
+    // Change this part inside generatePreview()
+    const searchBtn = document.querySelector("#preview-actions button");
+    if(searchBtn) searchBtn.innerText = "Developer Search Ready";
 
-    document.getElementById("preview-section").style.display = "flex";
-const frame = document.getElementById("preview-frame");
-    frame.scrollTo(0,0);
+   document.getElementById("preview-section").style.display = "flex";
+// --- ADD THIS LINE TO AUTO-CLOSE THE INPUT BOX ---
+    closeConfigurator(); 
+
+    const frame = document.getElementById("preview-frame");
+    frame.onload = () => { frame.contentWindow.scrollTo(0,0); };
 }
 
 function closePreview() { document.getElementById("preview-section").style.display = "none"; }
 
-let clientJobId = null; // To track the customer's current request
+// --- AUTHENTICATION ENGINE ---
+
+function handleAuth() {
+    const email = document.getElementById("auth-email").value.trim();
+    const pass = document.getElementById("auth-pass").value.trim();
+
+    if (!email || !pass) return alert("Please fill all fields.");
+
+    // Create a safe key for Firebase (emails can't have dots in keys)
+    const userKey = email.replace(/\./g, '_');
+    const userRef = window.dbRef(window.db, 'users/' + userKey);
+
+    window.dbOnValue(userRef, (snapshot) => {
+        const userData = snapshot.val();
+
+        if (userData) {
+            // LOGIN LOGIC
+            if (userData.password === pass) {
+                localStorage.setItem("currentUserEmail", email);
+                document.getElementById("auth-modal").style.display = "none";
+                alert("Welcome back!");
+                location.reload();
+            } else {
+                alert("Incorrect password.");
+            }
+        } else {
+            // REGISTRATION LOGIC
+            window.dbSet(userRef, {
+                email: email,
+                password: pass,
+                createdAt: Date.now()
+            }).then(() => {
+                localStorage.setItem("currentUserEmail", email);
+                document.getElementById("auth-modal").style.display = "none";
+                alert("Account Created Successfully!");
+            });
+        }
+    }, { onlyOnce: true });
+}
+
+// Function to actually SHOW the modal
+function showAuthPrompt() {
+    document.getElementById("auth-modal").style.display = "flex";
+}
+
+function registerUser(email, password) {
+    const userKey = email.replace(/\./g, '_'); // Firebase keys can't have dots
+    const userRef = window.dbRef(window.db, 'users/' + userKey);
+
+    window.dbOnValue(userRef, (snapshot) => {
+        if (snapshot.exists()) {
+            alert("Email already registered. Please login.");
+        } else {
+            const newUser = {
+                email: email,
+                password: password,
+                role: "client",
+                createdAt: Date.now()
+            };
+
+            window.dbSet(userRef, newUser).then(() => {
+                localStorage.setItem("currentUserEmail", email);
+                alert("Account created successfully!");
+                location.reload(); // Refresh to update UI state
+            });
+        }
+    }, { onlyOnce: true });
+}
+
+function createProjectRequest(moduleName, description) {
+    const userEmail = localStorage.getItem("currentUserEmail");
+    
+    if (!userEmail) {
+        showAuthPrompt();
+        return;
+    }
+
+    const newJob = {
+        clientEmail: userEmail,
+        clientName: localStorage.getItem("currentUserName") || userEmail.split('@')[0],
+        module: moduleName,
+        description: description,
+        status: "searching",
+        timestamp: Date.now(),
+        messages: []
+    };
+
+    // SAVE TO FIREBASE
+    const jobsRef = window.dbRef(window.db, 'jobPool');
+    window.dbPush(jobsRef, newJob).then(() => {
+        alert("Signal Sent to HQ Cloud!");
+    }).catch(err => {
+        console.error("Cloud Sync Error:", err);
+    });
+}
 
 function startStatusCheck(jobId) {
-    clientJobId = jobId;
-    
-    const checkInterval = setInterval(() => {
-        const currentPool = JSON.parse(localStorage.getItem("jobPool")) || [];
-        const myJob = currentPool.find(j => j.id == clientJobId);
+    // Instead of a loop, we "Listen" to that specific job in the cloud
+    const jobRef = window.dbRef(window.db, 'jobPool/' + jobId);
+
+    window.dbOnValue(jobRef, (snapshot) => {
+        const myJob = snapshot.val();
 
         if (myJob && myJob.status === "active") {
-            // STOP the loop
-            clearInterval(checkInterval);
-            
-            // AUTOMATICALLY open the chat for the customer
-            openChatForCustomer(myJob);
+            // No need to "ClearInterval", Firebase listeners stay active 
+            // until you navigate away or manually turn them off.
+            openChatForCustomer({ ...myJob, id: jobId });
         }
-    }, 2000); // Checks every 2 seconds
+        
+        // If you want to handle "Completed" or "Delivered" states live:
+        if (myJob && myJob.status === "delivered") {
+             renderMyOrders(); // Refresh the list to show the green download button
+        }
+    });
 }
 
 function openChatForCustomer(job) {
-    if (!job) return; // Safety check
+    if (!job || !job.id) return; 
 
+    const agentDisplay = job.agentAssigned ? job.agentAssigned.toUpperCase() : "VELTRIX_SYSTEM";
+
+    // --- VISUAL HAND-OFF (The "Cyber" Effect) ---
     const statusText = document.getElementById("search-status");
     if (statusText) {
-        statusText.innerText = "MATCH_FOUND: REDIRECTING TO " + job.agentAssigned.toUpperCase() + "...";
-        statusText.style.color = "#25D366";
+        statusText.innerText = "ESTABLISHING UPLINK TO " + agentDisplay + "...";
+        statusText.style.color = "#00f2ff";
+        statusText.style.textShadow = "0 0 10px #00f2ff";
     }
 
-    // Redirecting effect
     setTimeout(() => {
-        document.getElementById("searching-overlay").style.display = "none";
-        document.getElementById("preview-section").style.display = "none";
+        // 1. Hide Overlays & Modules
+        ["searching-overlay", "preview-section", "services-module"].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = "none";
+        });
 
-        // Open Large Chat (80%)
+        // 2. Apply the "Large Box" Style (80%)
         const chatBox = document.getElementById("chat-box");
-        chatBox.style.display = "flex";
-        chatBox.style.width = "80%";
-        chatBox.style.height = "80%";
-        chatBox.style.top = "10%";
-        chatBox.style.left = "10%";
+        if (chatBox) {
+            chatBox.style.display = "flex";
+            chatBox.style.position = "fixed"; 
+            chatBox.style.width = "85%";  // Slightly wider for mobile comfort
+            chatBox.style.height = "80%";
+            chatBox.style.top = "10%";
+            chatBox.style.left = "7.5%";
+            chatBox.style.zIndex = "9999"; 
+            chatBox.style.background = "#020617";
+            chatBox.style.border = "2px solid #00f2ff";
+            chatBox.style.boxShadow = "0 0 20px rgba(0, 242, 255, 0.2)";
+            
+            chatBox.dataset.activeJobId = job.id; // Store Firebase Key
+            
+            const nameHeader = document.getElementById("chat-agent-name");
+            if (nameHeader) nameHeader.innerText = "SESSION: " + agentDisplay;
+        }
         
-        chatBox.dataset.activeJobId = job.id;
+        // 3. START LIVE CLOUD MESSAGES
+        listenForChatMessages(job.id, agentDisplay);
 
-        document.getElementById("chat-agent-name").innerText = "SESSION: " + job.agentAssigned;
+    }, 800); 
+}
+
+function listenForChatMessages(jobId, agentName) {
+    const msgDiv = document.getElementById("chat-messages");
+    if (!msgDiv) return;
+
+    // Clear and show system greeting
+    msgDiv.innerHTML = "";
+    addMessage("System", `Handshake complete. Uplink stable.`, "agent");
+
+    // Connect to Firebase messages for THIS specific job
+    const chatRef = window.dbRef(window.db, `jobPool/${jobId}/messages`);
+    
+    window.dbOnValue(chatRef, (snapshot) => {
+        const messages = snapshot.val();
+        msgDiv.innerHTML = ""; // Refresh list
         
-        // Initial Message
-        const msgDiv = document.getElementById("chat-messages");
-        msgDiv.innerHTML = ""; 
-        addMessage("System", `Connection secure. You are now chatting with ${job.agentAssigned}.`, "agent");
-    }, 2000);
+        // Add System Greeting back
+        addMessage("System", `Uplink to ${agentName} Active.`, "agent");
+
+        if (messages) {
+            Object.keys(messages).forEach(key => {
+                const m = messages[key];
+                // Determine if it was sent by "CLIENT" (me) or "AGENT/ADMIN"
+                const type = (m.sender === "CLIENT") ? "user" : "agent";
+                addMessage(m.sender, m.text, type);
+            });
+            // Auto-scroll to bottom
+            msgDiv.scrollTop = msgDiv.scrollHeight;
+        }
+    });
+}
+
+function showServices() {
+    // 1. Hide other modules, show services
+    hideAllModules();
+    document.getElementById("services-module").style.display = "block";
+    
+    // 2. Load the orders into the top of the tab
+    renderMyOrders();
+}
+
+// 2. Fix the "My Orders" Rendering Logic
+function renderMyOrders() {
+    const container = document.getElementById("my-orders-container");
+    if (!container) return;
+
+    const activeEmail = localStorage.getItem("currentUserEmail");
+
+    // If not logged in, show the sign-in prompt inside the container
+    if (!activeEmail) {
+        container.innerHTML = `
+            <div style="text-align:center; padding:20px;">
+                <p style="color:#94a3b8;">Please login to view your projects.</p>
+                <button onclick="showAuthPrompt()" style="background:#00f2ff; color:black; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">SIGN IN</button>
+            </div>`;
+        return;
+    }
+
+    // If they ARE logged in, we trigger the Firebase Listener
+    // The listener will take over and fill the container with data
+    listenToFirebaseJobs();
+}
+
+function listenToFirebaseJobs() {
+    const activeEmail = localStorage.getItem("currentUserEmail");
+    if (!activeEmail) return;
+
+    const jobsRef = window.dbRef(window.db, 'jobPool');
+
+    window.dbOnValue(jobsRef, (snapshot) => {
+        const data = snapshot.val();
+        const container = document.getElementById("my-orders-container");
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        if (!data) {
+            container.innerHTML = "<p style='opacity:0.5; text-align:center; padding:20px;'>No active project signals.</p>";
+            return;
+        }
+
+        const myJobs = Object.keys(data)
+            .map(key => ({ ...data[key], id: key }))
+            .filter(j => j.clientEmail === activeEmail && j.status !== "archived");
+
+        if (myJobs.length === 0) {
+            container.innerHTML = "<p style='opacity:0.5; text-align:center; padding:20px;'>No active project signals.</p>";
+            return;
+        }
+
+        myJobs.forEach(job => {
+            const isDelivered = job.status === 'delivered';
+            const isCompleted = job.status === 'completed';
+            
+            // Check for the price field the agent submitted (job.amount)
+            const displayPrice = job.amount || job.finalPrice || "0";
+            
+            let statusColor = '#00f2ff'; 
+            if (isCompleted) statusColor = '#f59e0b'; 
+            if (isDelivered) statusColor = '#25D366'; 
+
+            container.innerHTML += `
+                <div style="position: relative; background: rgba(30, 41, 59, 0.8); border: 1px solid ${statusColor}; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    
+                    <button onclick="event.stopPropagation(); removeOrder('${job.id}')" style="position: absolute; top: 5px; right: 8px; background: none; border: none; color: rgba(255,255,255,0.3); cursor: pointer; font-size: 0.7rem;">Remove</button>
+
+                    <div>
+                        <h5 style="margin:0; color:white;">${job.module || 'Project'}</h5>
+                        <p style="margin:0; font-size:0.75rem; color:${statusColor}; text-transform:uppercase; font-weight:bold;">
+                            ${isDelivered ? 'READY FOR DOWNLOAD' : job.status}
+                        </p>
+                    </div>
+
+                    <div style="display: flex; gap: 8px;">
+                        ${isDelivered ? `
+                            <button onclick="event.stopPropagation(); window.open('${job.downloadUrl || '#'}', '_blank')" 
+                                    style="background:#25D366; color:black; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; font-weight:bold; font-size:0.75rem;">
+                                DOWNLOAD ZIP
+                            </button>
+                        ` : isCompleted ? `
+                            <button onclick="event.stopPropagation(); triggerPayment('${job.id}', '${displayPrice}')" 
+                                    style="background:#f59e0b; color:black; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; font-weight:bold; font-size:0.75rem;">
+                                PAY KES ${displayPrice}
+                            </button>
+                        ` : ''}
+
+                        ${!isDelivered ? `
+                            <button onclick="selectOrder('${job.id}')" style="background:${statusColor}; color:black; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; font-weight:bold; font-size:0.75rem;">
+                                SELECT
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        });
+    });
+}
+
+function downloadProject(url) {
+    // In a real app, this would be a link to a ZIP file.
+    // For now, we simulate the delivery.
+    alert("Inbound Transmission: Downloading your Project Files (ZIP)...");
+    window.location.href = url; 
+}
+
+// Payment Trigger Function
+function triggerPayment(amount) {
+    const paymentMsg = `PROJECT COMPLETED!\n\nTo receive your files, please pay $${amount} to M-Pesa:\nNumber: +254117559174\n\nOnce paid, please share the confirmation code in the chat.`;
+    alert(paymentMsg);
+}
+
+function removeOrder(id) {
+    if (!confirm("Are you sure you want to remove this order from your list?")) return;
+
+    // Remove from Firebase jobPool
+    const jobRef = window.dbRef(window.db, `jobPool/${id}`);
+    
+    window.dbRemove(jobRef).then(() => {
+        // Cleanup local pointers
+        const activeId = localStorage.getItem("activeClientJobId");
+        if (String(activeId) === String(id)) {
+            localStorage.removeItem("activeClientJobId");
+        }
+        alert("Order removed from HQ Cloud.");
+        // renderMyOrders() will auto-trigger if you have a listener active
+    }).catch(err => console.error("Delete failed:", err));
+}
+
+function selectOrder(id) {
+    const jobRef = window.dbRef(window.db, `jobPool/${id}`);
+
+    // Get the data once to check status
+    window.dbOnValue(jobRef, (snapshot) => {
+        const selectedJob = snapshot.val();
+        if (!selectedJob) {
+            alert("Session sync failed. Project not found in Cloud.");
+            return;
+        }
+
+        // 1. Prepare Handshake Updates
+        const updates = {
+            clientConnected: true,
+            agentNotified: false, 
+            lastActiveClient: "CLIENT_" + id.toString().slice(-4)
+        };
+
+        // ONLY change status to 'active' if it's currently 'searching'
+        // This prevents overwriting 'completed' or 'delivered' status
+        if (selectedJob.status === "searching") {
+            updates.status = "active"; 
+        }
+
+        // 2. Sync to Firebase
+        window.dbUpdate(jobRef, updates).then(() => {
+            localStorage.setItem("activeClientJobId", id);
+
+            // 3. UI Cleanup
+            const module = document.getElementById("services-module");
+            if (module) module.style.display = "none";
+
+            // 4. Open Chat 
+            // We pass the latest data from the snapshot plus the new updates
+            openChatForCustomer({ ...selectedJob, ...updates, id: id });
+        });
+    }, { onlyOnce: true });
+}
+
+function reconnectToOrder() {
+    const activeEmail = localStorage.getItem("currentUserEmail");
+    if (!activeEmail) return showAuthPrompt();
+
+    const jobsRef = window.dbRef(window.db, 'jobPool');
+
+    window.dbOnValue(jobsRef, (snapshot) => {
+        const data = snapshot.val();
+        if (!data) {
+            alert("No active session found. Please start a new project.");
+            return;
+        }
+
+        // Filter cloud jobs belonging to this user that aren't finished
+        const myActiveJobs = Object.keys(data)
+            .map(key => ({ ...data[key], id: key }))
+            .filter(j => j.clientEmail === activeEmail && j.status !== "delivered");
+
+        // Case 1: No orders
+        if (myActiveJobs.length === 0) {
+            alert("No active session found.");
+            return;
+        }
+
+        // Case 2 & 3 Combined: Always show the picking list (The Services Module)
+        // This ensures the user sees the card with the "Pay" or "Select" buttons
+        const module = document.getElementById("services-module");
+        if (module) {
+            module.style.display = "block";
+            renderMyOrders(); 
+            module.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, { onlyOnce: true });
 }
 
 // --- AGENT & JOB SYSTEM ---
 
-// Initialize data from LocalStorage
-let pendingApplications = JSON.parse(localStorage.getItem("pendingApps")) || [];
-
 // 1. DEVELOPER SIDE: Submit Application
-// Toggle between Register, Login, and Choice views
 function showDevForm(view) {
     document.getElementById('dev-auth-choice').style.display = view === 'choice' ? 'block' : 'none';
     document.getElementById('dev-reg-form').style.display = view === 'register' ? 'block' : 'none';
     document.getElementById('dev-login-form').style.display = view === 'login' ? 'block' : 'none';
 }
 
-// Updated Registration with Password
+// --- DEVELOPER REGISTRATION ---
 function requestToJoin() {
-    // Helper to check if element exists
-    const getVal = (id) => {
-        const el = document.getElementById(id);
-        if (!el) {
-            console.error("Missing ID in HTML: " + id);
-            return null;
-        }
-        return el.value.trim();
-    };
+    const name = document.getElementById("reg-name").value;
+    const user = document.getElementById("reg-user").value;
+    const pass = document.getElementById("reg-pass").value;
+    const phone = document.getElementById("reg-phone").value;
+    const field = document.getElementById("reg-field").value;
 
-    const name = getVal("reg-name");
-    const phone = getVal("reg-phone");
-    const user = getVal("reg-user");
-    const pass = getVal("reg-pass");
-    const field = getVal("reg-field");
+    if (!name || !user || !pass) return alert("Fill all fields.");
 
-    // If any are null, the function stops here instead of crashing
-    if (name === null || user === null || pass === null) {
-        alert("System Error: Form fields not found. Check Console (F12).");
-        return;
-    }
-
-    if (!name || !user || !pass) {
-        alert("🚨 Please fill in all required fields.");
-        return;
-    }
-
-    // ... rest of your logic to save to pendingApps ...
-    const application = {
-        id: Date.now(),
-        name, phone, username: user, password: pass, field,
+    const newAppRef = window.dbPush(window.dbRef(window.db, 'pendingApplications'));
+    
+    window.dbSet(newAppRef, {
+        name, username: user, password: pass, phone, field,
+        timestamp: Date.now(),
         status: "pending"
-    };
-
-    let pendingApps = JSON.parse(localStorage.getItem("pendingApps")) || [];
-    pendingApps.push(application);
-    localStorage.setItem("pendingApps", JSON.stringify(pendingApps));
-
-    alert("✅ Application Sent!");
-    showDevForm('choice');
+    }).then(() => {
+        alert("Application sent! Wait for Admin approval.");
+        showDevForm('choice');
+    });
 }
 
-// Developer Login Logic
+// --- DEVELOPER LOGIN ---
 function developerLogin() {
-    const user = document.getElementById("login-user").value;
-    const pass = document.getElementById("login-pass").value;
+    // 1. FIXED: Changed "dev-name-input" to "login-user" to match your HTML
+    const nameInput = document.getElementById("login-user"); 
     
-    // 1. Get the list of approved agents from Admin
-    const agents = JSON.parse(localStorage.getItem("agents")) || [];
-    
-    // 2. Look for a match
-    const validAgent = agents.find(a => a.username === user && a.password === pass);
-
-    if (validAgent) {
-        // SUCCESS: Set the global identity
-        currentAgentName = validAgent.name; 
-        
-        // Hide login forms, show dashboard
-        document.getElementById("dev-auth-choice").style.display = "none";
-        document.getElementById("dev-login-form").style.display = "none";
-        
-        loadAgentDashboard();
-        alert("Welcome back, " + currentAgentName);
-    } else {
-        alert("Access Denied: Invalid credentials or account not yet approved by Admin.");
+    if (!nameInput) {
+        console.error("Could not find the login-user input field");
+        return;
     }
+
+    const realName = nameInput.value.trim();
+
+    if (realName === "") {
+        alert("Please enter a valid terminal name.");
+        return;
+    }
+
+    // 2. Store the REAL name
+    localStorage.setItem("currentAgent", realName);
+    
+    // 3. Update the global variable
+    currentAgentName = realName;
+
+    // 4. Run the UI and Listeners
+    if (typeof startNotificationListener === "function") startNotificationListener();
+    if (typeof loadAgentDashboard === "function") loadAgentDashboard();
+    
+    // Switch tabs to the dashboard
+    showTab('developer-tab'); 
+}
+
+function developerLogout() {
+    if (!confirm("Logout of Veltrix Terminal?")) return;
+    
+    // 1. Hide the dashboard
+    const dashboard = document.getElementById("agent-dashboard"); 
+    if (dashboard) dashboard.style.display = "none";
+
+    // 2. Clear local session
+    localStorage.removeItem("currentAgent");
+    window.currentAgentName = null;
+
+    // 3. Optional: Reset any active listeners if you stored them
+    // (This prevents the app from trying to update a hidden dashboard)
+    
+    alert("Terminal Disconnected.");
+    location.reload(); // Hard refresh is the cleanest way to clear the memory
 }
 
 // 2. ADMIN SIDE: Load Data (Shows Pending Apps and Active Agents)
@@ -1221,131 +1639,344 @@ function showAdminTab(tab) {
 }
 
 function renderAdminJobs() {
-    const pool = JSON.parse(localStorage.getItem("jobPool")) || [];
     const listDiv = document.getElementById("jobs-list");
-    listDiv.innerHTML = ""; 
+    if (!listDiv) return;
 
-    pool.forEach(job => {  // <--- The variable 'job' starts being defined here
-        
-        let html = `
-            <div style="background:#0f172a; padding:15px; border-radius:10px; margin-bottom:10px; border:1px solid #1e293b;">
-                <p><strong>Project:</strong> ${job.module}</p>
-                <p><strong>Status:</strong> ${job.status}</p>
-        `;
+    // Listen to the cloud jobPool
+    const jobsRef = window.dbRef(window.db, 'jobPool');
+    
+    window.dbOnValue(jobsRef, (snapshot) => {
+        const data = snapshot.val();
+        listDiv.innerHTML = ""; 
 
-        // CORRECT PLACEMENT: Inside the forEach loop
-        if (job.status === "paid_pending_delivery") {
-            html += `<button onclick="deliverProject(${job.id}, '${job.downloadLink}')" style="background:#25D366; color:white; border:none; padding:10px; cursor:pointer; border-radius:5px;">APPROVE & DELIVER</button>`;
+        if (!data) {
+            listDiv.innerHTML = "<p style='opacity:0.5;'>No project signals in cloud.</p>";
+            return;
         }
 
-        html += `</div>`;
-        listDiv.innerHTML += html;
+        Object.keys(data).forEach(id => {
+    const job = data[id];
+    
+    // Check if agent has set a price
+    const billing = job.amount ? `KES ${job.amount}` : "PENDING AGENT INPUT";
+    
+    let html = `
+        <div style="background:#0f172a; padding:15px; border-radius:10px; margin-bottom:10px; border:1px solid #1e293b;">
+            <p><strong>Client:</strong> ${job.clientName || 'Private'}</p>
+            <p><strong>Project:</strong> ${job.module}</p>
+            <p><strong>Billing:</strong> <span style="color:#25D366; font-weight:bold;">${billing}</span></p> <p><strong>Status:</strong> <span style="color:#00f2ff">${job.status.toUpperCase()}</span></p>
+    `;
 
-    }); // <--- The variable 'job' dies here
+    if (job.status === "completed") { // Admin approves once completed
+        html += `
+            <button onclick="approveProject('${id}')" 
+                style="background:#25D366; color:black; border:none; padding:10px; cursor:pointer; border-radius:5px; font-weight:bold; margin-top:10px; width:100%;">
+                APPROVE & REQUEST KES ${job.amount} FROM CLIENT
+            </button>`;
+    }
+
+            html += `</div>`;
+            listDiv.innerHTML += html;
+        });
+    });
+}
+
+function sendWhatsAppNotification(phone, message) {
+    // Clean the phone number (remove spaces/dashes)
+    const cleanPhone = phone.replace(/\D/g, '');
+    const encodedMsg = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
 }
 
 function loadAdminData() {
     const pendingDiv = document.getElementById("pending-list");
     const activeDiv = document.getElementById("active-agents-list");
     const jobsDiv = document.getElementById("jobs-list");
-
-    // 1. Render Pending Applications
-    pendingDiv.innerHTML = "";
-    if (pendingApplications.length === 0) pendingDiv.innerHTML = "<p>No pending apps.</p>";
-    pendingApplications.forEach((app, i) => {
-        pendingDiv.innerHTML += `
-            <div style="background:#1e293b; padding:15px; margin-bottom:10px; border-radius:8px; border-left:4px solid #00f2ff;">
-                <p><strong>${app.name}</strong> (@${app.username})</p>
-                <button onclick="approveDev(${i})" style="background:#25D366; color:white; border:none; padding:5px 10px; cursor:pointer; border-radius:4px;">Approve & Transfer</button>
-                <button onclick="declineDev(${i})" style="background:#ff4444; color:white; border:none; padding:5px 10px; cursor:pointer; border-radius:4px; margin-left:5px;">Decline</button>
-            </div>`;
-    });
-
-    // 2. Render Active Agents (The list they transfer TO)
-    activeDiv.innerHTML = "";
-    if (agents.length === 0) activeDiv.innerHTML = "<p>No active agents.</p>";
-    agents.forEach((a, i) => {
-        activeDiv.innerHTML += `
-            <div style="background:#0f172a; padding:15px; margin-bottom:10px; border-radius:8px; border-left:4px solid #25D366;">
-                <p><strong>${a.name}</strong> | Phone: ${a.phone}</p>
-                <p style="font-size:0.8rem; opacity:0.6;">Jobs Completed: ${a.jobs} | Status: ${a.working ? 'BUSY' : 'AVAILABLE'}</p>
-                <button onclick="deleteAgent(${i})" style="color:#ff4444; background:none; border:1px solid #ff4444; cursor:pointer; font-size:0.7rem;">Remove Agent</button>
-            </div>`;
-    });
-
-    // 3. Render Jobs
-   // 3. Render Jobs (Inside loadAdminData)
-    const pool = JSON.parse(localStorage.getItem("jobPool")) || []; // Get the live pool
-    jobsDiv.innerHTML = "";
     
-    pool.forEach((j, i) => {
-        let jobHtml = `
-            <div style="background:#1e293b; padding:15px; margin-bottom:10px; border-radius:8px; border-left: 4px solid ${j.status === 'active' ? '#00f2ff' : '#64748b'};">
-                <p><strong>Project:</strong> ${j.module}</p>
-                <p style="font-size:0.8rem;">Client: ${j.clientName} | Agent: ${j.agentAssigned || 'None'}</p>
-                <p style="font-size:0.8rem;">Status: <span style="color:#f59e0b">${j.status.toUpperCase()}</span></p>
-        `;
+    // --- 1. SYNC PENDING APPLICATIONS ---
+    const pendingRef = window.dbRef(window.db, 'pendingApplications');
+    window.dbOnValue(pendingRef, (snapshot) => {
+        const data = snapshot.val();
+        if (!pendingDiv) return;
 
-        // NEW LOGIC: Only show button if payment is waiting for Admin approval
-        if (j.status === "paid_pending_delivery") {
-            jobHtml += `
-                <button onclick="deliverProject(${j.id})" 
-                        style="background:#25D366; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:5px; margin-top:10px; font-weight:bold;">
-                    ✅ CONFIRM PAYMENT & DELIVER
-                </button>`;
+        if (!data) {
+            pendingDiv.innerHTML = "<p style='opacity:0.5;'>No pending applications.</p>";
+            return;
         }
 
-        jobHtml += `</div>`;
-        jobsDiv.innerHTML += jobHtml;
+        pendingDiv.innerHTML = Object.keys(data).map(key => {
+            const app = data[key];
+            return `
+                <div style="background:#1e293b; padding:15px; margin-bottom:10px; border-radius:8px; border-left:4px solid #00f2ff;">
+                    <p><strong>${app.name}</strong> (@${app.username})</p>
+                    <button onclick="approveDev('${key}')" style="background:#25D366; color:white; border:none; padding:5px 10px; cursor:pointer; border-radius:4px;">Approve</button>
+                    <button onclick="declineDev('${key}')" style="background:#ff4444; color:white; border:none; padding:5px 10px; cursor:pointer; border-radius:4px; margin-left:5px;">Decline</button>
+                </div>`;
+        }).join('');
+    });
+
+    // --- 2. SYNC ACTIVE AGENTS ---
+    const agentsRef = window.dbRef(window.db, 'agents');
+    window.dbOnValue(agentsRef, (snapshot) => {
+        const data = snapshot.val();
+        if (!activeDiv) return;
+
+        if (!data) {
+            activeDiv.innerHTML = "<p style='opacity:0.5;'>No active agents.</p>";
+            return;
+        }
+
+        activeDiv.innerHTML = Object.keys(data).map(key => {
+            const a = data[key];
+            return `
+                <div style="background:#0f172a; padding:15px; margin-bottom:10px; border-radius:8px; border-left:4px solid #25D366; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <p style="margin:0;"><strong>${a.name}</strong></p>
+                        <p style="margin:0; font-size:0.7rem; opacity:0.6;">Staff Member | ${a.phone || 'No Phone'}</p>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <button onclick="openInternalChat('${a.name}')" style="background:#00f2ff; color:black; border:none; padding:5px 10px; cursor:pointer; border-radius:4px; font-weight:bold;">CHAT</button>
+                        <button onclick="deleteAgent('${key}')" style="color:#ff4444; background:none; border:1px solid #ff4444; cursor:pointer; font-size:0.7rem; border-radius:4px;">Remove</button>
+                    </div>
+                </div>`;
+        }).join('');
+    });
+
+    // --- 3. SYNC JOBS (PROJECT SIGNALS) ---
+    const jobsRef = window.dbRef(window.db, 'jobPool');
+    window.dbOnValue(jobsRef, (snapshot) => {
+        const data = snapshot.val();
+        if (!jobsDiv) return;
+
+        if (!data) {
+            jobsDiv.innerHTML = "<p style='opacity:0.5; padding: 20px; text-align:center;'>No active project signals.</p>";
+            return;
+        }
+
+        // Convert object to array and filter out delivered ones
+        const visibleJobs = Object.keys(data)
+            .map(key => ({ ...data[key], id: key }))
+            .filter(job => job.status !== "delivered")
+            .sort((a, b) => b.timestamp - a.timestamp);
+
+        jobsDiv.innerHTML = "";
+        
+        visibleJobs.forEach(job => {
+            let borderColor = "#334155";
+            if (job.status === 'paid' || job.status === 'completed') borderColor = "#25D366"; 
+            if (job.status === 'searching') borderColor = "#f59e0b"; 
+            if (job.status === 'active') borderColor = "#00f2ff"; 
+
+            const canApprove = job.status === 'paid' || job.status === 'completed';
+
+            jobsDiv.innerHTML += `
+                <div style="background:#1e293b; padding:18px; border-radius:12px; margin-bottom:15px; border-left:6px solid ${borderColor};">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div style="flex: 1; padding-right: 20px;">
+                            <h4 style="margin:0; color:white; font-size: 1.25rem;">${job.clientName || 'Private Client'}</h4>
+                            <p style="font-size:0.75rem; font-weight:bold; color:${borderColor}; margin: 4px 0;">TASK: ${job.module}</p>
+                            
+                            <div style="margin-top:10px; background: rgba(255, 255, 255, 0.03); padding: 8px; border-radius: 6px;">
+                                <p style="margin:0; font-size:0.85rem; color:#cbd5e1;">${job.description || "No instructions."}</p>
+                            </div>
+
+                            ${job.downloadUrl ? `
+                                <div style="background: rgba(37, 211, 102, 0.1); padding: 8px; border-radius: 6px; margin-top: 10px; border: 1px dashed #25D366;">
+                                    <a href="${job.downloadUrl}" target="_blank" style="color:#00f2ff; font-size:0.8rem; text-decoration:none;">🔗 View Submission</a>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <div style="text-align:right; min-width: 140px;">
+                            <p style="font-size:0.7rem; color:#94a3b8;">${job.status.toUpperCase()}</p>
+                            ${job.finalPrice ? `<p style="color:#25D366; font-size:1.1rem; font-weight:bold;">$${job.finalPrice}</p>` : ''}
+                            
+                            ${canApprove ? `
+                                <button onclick="approveProject('${job.id}')" style="background:#25D366; color:black; border:none; padding:8px; border-radius:5px; cursor:pointer; font-weight:bold; width: 100%;">APPROVE</button>
+                            ` : ''}
+                            
+                            <button onclick="openLargeChatForAdmin('${job.id}')" style="margin-top:5px; background:transparent; color:#94a3b8; border:1px solid #334155; padding:5px; border-radius:5px; cursor:pointer; font-size:0.7rem; width: 100%;">Chat</button>
+                        </div>
+                    </div>
+                </div>`;
+        });
     });
 }
 
-// 3. ADMIN ACTIONS: Approve/Decline/Delete
-function approveDev(index) {
-    const app = pendingApplications[index];
-    
-    // Transfer ALL data including username and password
-    const newAgent = {
-        id: app.id,
-        name: app.name,
-        phone: app.phone,
-        username: app.username, // CRITICAL: Carrying over for login
-        password: app.password, // CRITICAL: Carrying over for login
-        field: app.field,
-        jobs: 0,
-        status: "free",
-        working: false
-    };
+function approveDev(firebaseId) {
+    const pendingRef = window.dbRef(window.db, `pendingApplications/${firebaseId}`);
+    const agentRef = window.dbRef(window.db, `agents/${firebaseId}`);
 
-    // Add to active agents
-    agents.push(newAgent);
-    
-    // Remove from pending
-    pendingApplications.splice(index, 1);
-
-    // Save both lists
-    saveAll(); 
-    
-    // Simulate Notification
-    alert(`✅ ${app.name} Approved!\n\nSystem: A notification has been sent to ${app.phone}. They can now login using their username (@${app.username}).`);
-    
-    // Refresh Admin View
-    loadAdminData();
+    // Get the data once, then move it
+    window.dbOnValue(pendingRef, (snapshot) => {
+        const devData = snapshot.val();
+        if (devData) {
+            window.dbSet(agentRef, devData).then(() => {
+                window.dbRemove(pendingRef);
+                sendWhatsAppNotification(devData.phone, `Congratulations ${devData.name}! Your Veltrix application was approved.`);
+                alert("Developer Approved!");
+            });
+        }
+    }, { onlyOnce: true });
 }
 
-function declineDev(index) {
-    pendingApplications.splice(index, 1);
-    saveAll();
-    alert("Application Declined.");
-    loadAdminData();
+function declineDev(firebaseId) {
+    if (!confirm("Are you sure you want to REJECT this application?")) return;
+    
+    const pendingRef = window.dbRef(window.db, `pendingApplications/${firebaseId}`);
+    window.dbRemove(pendingRef).then(() => {
+        alert("Application removed.");
+    });
 }
 
-function deleteAgent(i) {
-    if(confirm("Permanently remove this agent?")) {
-        agents.splice(i, 1);
-        saveAll();
-        loadAdminData();
+function sendMessage() {
+    const input = document.getElementById("chat-input");
+    if (!input) return;
+    
+    const text = input.value.trim();
+    if (!text) return;
+
+    // 1. Get Job ID from either the window global or the chatbox dataset
+    // This ensures it works in both the Admin view and the Customer's 80% view
+    const chatBox = document.getElementById("chat-box");
+    const jobId = window.currentChatJobId || (chatBox ? chatBox.dataset.activeJobId : null);
+    
+    if (!jobId) {
+        console.error("Uplink Error: No active Job ID found for this session.");
+        return;
     }
+
+    // 2. Determine sender dynamically
+    let sender = "CLIENT"; // Default
+    if (localStorage.getItem("currentAgent")) {
+        sender = "AGENT";
+    } else if (localStorage.getItem("isAdmin") === "true") { 
+        // Assuming you set this in your admin login logic
+        sender = "ADMIN";
+    }
+
+    // 3. Reference the specific message list for this job in Firebase
+    const chatRef = window.dbRef(window.db, `jobPool/${jobId}/messages`);
+    const newMessageRef = window.dbPush(chatRef);
+
+    // 4. Save to Cloud
+    window.dbSet(newMessageRef, {
+        sender: sender,
+        text: text,
+        timestamp: Date.now(),
+        status: "sent"
+    }).then(() => {
+        input.value = ""; // Clear input after successful cloud sync
+        
+        // Optional: Auto-scroll the chat to the bottom
+        const msgDiv = document.getElementById("chat-messages");
+        if (msgDiv) msgDiv.scrollTop = msgDiv.scrollHeight;
+    }).catch(err => {
+        alert("Signal Lost: Could not send message to cloud.");
+        console.error(err);
+    });
+}
+
+function openLargeChatForAdmin(jobOrId) {
+    const jobId = typeof jobOrId === 'object' ? jobOrId.id : jobOrId;
+    
+    // Save state for the sender logic
+    window.currentChatJobId = jobId; 
+
+    // Show Modal
+    const chatModal = document.getElementById("chat-modal") || document.getElementById("large-chat-container");
+    if (chatModal) chatModal.style.display = "flex";
+
+    // Trigger the Live Firebase Message Listener
+    // (Ensure you have the renderMessages function we updated earlier)
+    if (typeof renderMessages === "function") {
+        renderMessages(jobId);
+    }
+
+    // --- ENHANCED CLOUD HEADER LOGIC ---
+    const chatHeader = document.getElementById("chat-header-name");
+    if (chatHeader) {
+        const jobRef = window.dbRef(window.db, `jobPool/${jobId}`);
+        
+        // Fetch info from Firebase once to set the title
+        window.dbOnValue(jobRef, (snapshot) => {
+            const job = snapshot.val();
+            if (job) {
+                if (job.type === "internal") {
+                    chatHeader.innerHTML = `<span style="color:#ff00ff;">STAFF CHAT:</span> ${job.agentAssigned}`;
+                } else {
+                    chatHeader.innerText = `Project: ${job.module} (${job.clientName || 'Client'})`;
+                }
+            } else {
+                chatHeader.innerText = "Project Chat";
+            }
+        }, { onlyOnce: true });
+    }
+}
+
+function openInternalChat(agentName) {
+    const jobsRef = window.dbRef(window.db, 'jobPool');
+
+    // Search Firebase for an existing internal chat with this agent
+    window.dbOnValue(jobsRef, (snapshot) => {
+        const data = snapshot.val();
+        let existingId = null;
+
+        if (data) {
+            existingId = Object.keys(data).find(key => 
+                data[key].type === "internal" && data[key].agentAssigned === agentName
+            );
+        }
+
+        if (existingId) {
+            // Room exists, open it
+            openLargeChatForAdmin(existingId);
+        } else {
+            // Create a NEW Cloud Private Room
+            const newInternalChat = {
+                type: "internal",
+                module: "INTERNAL COMMS",
+                agentAssigned: agentName,
+                clientName: "ADMIN",
+                status: "active",
+                timestamp: Date.now()
+            };
+
+            const newChatRef = window.dbPush(jobsRef);
+            window.dbSet(newChatRef, newInternalChat).then(() => {
+                openLargeChatForAdmin(newChatRef.key);
+            });
+        }
+    }, { onlyOnce: true });
+}
+
+function approveProject(jobId) {
+    if (!confirm("Confirm delivery to client?")) return;
+
+    const jobRef = window.dbRef(window.db, `jobPool/${jobId}`);
+
+    // Update the cloud status to 'delivered'
+    window.dbUpdate(jobRef, {
+        status: "delivered",
+        deliveredAt: Date.now()
+    }).then(() => {
+        alert("Project moved to DELIVERED status.");
+    }).catch(err => {
+        alert("Cloud update failed.");
+        console.error(err);
+    });
+}
+
+function deleteAgent(firebaseId) {
+    if (!confirm("PERMANENTLY remove this agent from the system?")) return;
+
+    const agentRef = window.dbRef(window.db, `agents/${firebaseId}`);
+    window.dbRemove(agentRef).then(() => {
+        alert("Agent access revoked.");
+    });
 }
 
 function markPaid(i) {
@@ -1355,18 +1986,17 @@ function markPaid(i) {
 }
 
 function deliverProject(jobId) {
-    let pool = JSON.parse(localStorage.getItem("jobPool")) || [];
-    const jobIndex = pool.findIndex(j => j.id == jobId);
+    const jobRef = window.dbRef(window.db, `jobPool/${jobId}`);
 
-    if (jobIndex !== -1) {
-        // Set the final status and the download link
-        pool[jobIndex].status = "delivered";
-        pool[jobIndex].finalLink = "https://your-cloud-storage.com/project-files.zip"; 
-        
-        localStorage.setItem("jobPool", JSON.stringify(pool));
-        alert("Project Delivered! The client now has access to the download link.");
-        loadAdminData(); // Refresh the view
-    }
+    // Update the cloud entry
+    window.dbUpdate(jobRef, {
+        status: "delivered",
+        finalLink: "https://your-cloud-storage.com/project-files.zip", // Change this to your real link
+        deliveredAt: Date.now()
+    }).then(() => {
+        alert("Project Delivered! The client can now download the files.");
+        // UI updates automatically because of our onValue listeners
+    });
 }
 
 // 4. CLIENT SIDE: Job Assignment
@@ -1377,113 +2007,156 @@ function getAvailableAgent() {
 
 let currentChat = [];
 
-// Global Job Pool (Shared by all agents)
-let jobPool = JSON.parse(localStorage.getItem("jobPool")) || [];
 
 // 1. CLIENT SIDE: Post the job to the pool
 let searchTimer;
 let searchCountdown;
 
+// --- AUTO-REFRESH SYNC LOOP ---
+let lastJobCount = 0;
+
+function startAgentSync() {
+    const jobsRef = window.dbRef(window.db, 'jobPool');
+
+    // This replaces your 3-second setInterval loop entirely
+    window.dbOnValue(jobsRef, (snapshot) => {
+        const jobs = snapshot.val();
+        
+        // Only refresh if the developer is actually logged in
+        if (currentAgentName && document.getElementById("developer-tab").style.display !== "none") {
+            console.log("Cloud update detected. Syncing Agent Dashboard...");
+            loadAgentDashboard(); 
+        }
+    });
+}
+
 function openPayment() {
     const desc = document.getElementById('project-desc').value;
-    if(!desc) return alert("Please describe features.");
+    const email = localStorage.getItem("currentUserEmail");
+    
+    if (!desc) return alert("Please describe features.");
+    if (!email) return showAuthPrompt();
 
+    const moduleName = currentModule || "General Project";
+
+    // Create the Job Object for Firebase
     const newJob = {
-        id: Date.now(),
-        module: currentModule, // e.g., 'Web Dev'
+        module: moduleName, 
         description: desc,
-        clientName: "User_" + Math.floor(1000 + Math.random() * 9000),
+        clientEmail: email,
+        clientName: email.split('@')[0],
         status: "searching",
         agentAssigned: null,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        messages: {} // Firebase uses objects for lists, not empty arrays []
     };
 
-    let pool = JSON.parse(localStorage.getItem("jobPool")) || [];
-    pool.push(newJob);
-    localStorage.setItem("jobPool", JSON.stringify(pool));
+    const jobsRef = window.dbRef(window.db, 'jobPool');
+    const newJobRef = window.dbPush(jobsRef); // Create unique ID
 
-    // Show searching UI
-    document.getElementById("searching-overlay").style.display = "flex";
-    let timeLeft = 60;
+    window.dbSet(newJobRef, newJob).then(() => {
+        const jobId = newJobRef.key; // This is the ID from Firebase
+
+        // Show searching UI
+        document.getElementById("searching-overlay").style.display = "flex";
+        
+        // Timer Logic (Stay as is, but clear on success)
+        startSearchTimer(jobId);
+
+        // Start the Cloud Status Check
+        startStatusCheck(jobId);
+    });
+}
+
+function startSearchTimer(jobId) {
+    if (typeof searchCountdown !== 'undefined') clearInterval(searchCountdown);
     
+    let timeLeft = 60;
     searchCountdown = setInterval(() => {
         timeLeft--;
-        document.getElementById("search-timer").innerText = timeLeft + "s remaining";
-        document.getElementById("search-progress").style.width = ((60 - timeLeft) / 60 * 100) + "%";
+        const timerEl = document.getElementById("search-timer");
+        const progressEl = document.getElementById("search-progress");
+        
+        if(timerEl) timerEl.innerText = timeLeft + "s remaining";
+        if(progressEl) progressEl.style.width = ((60 - timeLeft) / 60 * 100) + "%";
         
         if(timeLeft <= 0) cancelSearch(true);
     }, 1000);
-
-    startStatusCheck(newJob.id);
 }
 
 function cancelSearch(isTimeout = false) {
+    // 1. Stop the countdown
     clearInterval(searchCountdown);
+    
+    // 2. Hide the searching UI
     document.getElementById("searching-overlay").style.display = "none";
-    if(isTimeout) alert("No developers are currently online. Please try again later.");
+    
+    if (isTimeout) {
+        alert("All developers are currently busy at the moment please try again later");
+    } else {
+        alert("Search minimized. You can re-open this from your 'Active Requests' section.");
+    }
+    
+    // Note: We DO NOT remove the job from localStorage here.
 }
 
 function startStatusCheck(jobId) {
-    const checkInterval = setInterval(() => {
-        const pool = JSON.parse(localStorage.getItem("jobPool")) || [];
-        // Find the specific job using the ID
-        const myJob = pool.find(j => j.id == jobId);
+    const jobRef = window.dbRef(window.db, `jobPool/${jobId}`);
+
+    // This "Watches" the job for you
+    window.dbOnValue(jobRef, (snapshot) => {
+        const myJob = snapshot.val();
 
         if (myJob && myJob.status === "active") {
-            clearInterval(checkInterval);
-            clearInterval(searchCountdown);
+            clearInterval(searchCountdown); // Stop the 60s timer
             
-            // Pass 'myJob' into the next function
-            openChatForCustomer(myJob); 
+            // Pass the data + the ID to the chat function
+            openChatForCustomer({ ...myJob, id: jobId }); 
         }
-    }, 2000);
+    });
 }
 
 // 2. AGENT SIDE: Accept a job from the pool
 function acceptJob(jobId) {
-    let currentPool = JSON.parse(localStorage.getItem("jobPool")) || [];
-    
-    // 1. Capacity Check: Count active jobs for this agent
-    const myActiveJobs = currentPool.filter(j => j.agentAssigned === currentAgentName && j.status === "active");
-    if (myActiveJobs.length >= 3) {
-        alert("🚨 Capacity Limit Reached: You cannot handle more than 3 active clients at once.");
-        return;
-    }
+    const activeName = currentAgentName || localStorage.getItem("currentAgent");
+    const jobsRef = window.dbRef(window.db, 'jobPool');
 
-    const jobIndex = currentPool.findIndex(j => j.id == jobId);
-    const job = currentPool[jobIndex];
+    // 1. Capacity Check using Cloud Data
+    window.dbOnValue(jobsRef, (snapshot) => {
+        const pool = snapshot.val() || {};
+        const myActiveJobs = Object.values(pool).filter(j => j.agentAssigned === activeName && j.status === "active");
+        
+        if (myActiveJobs.length >= 3) {
+            alert("🚨 Capacity Limit Reached: Finish your current tasks first.");
+            return;
+        }
 
-    if (!job || job.status !== "searching") return;
-
-    job.agentAssigned = currentAgentName; 
-    job.status = "active";
-    
-    localStorage.setItem("jobPool", JSON.stringify(currentPool));
-    loadAgentDashboard(); 
-    openLargeChatForAgent(job); 
+        const jobRef = window.dbRef(window.db, `jobPool/${jobId}`);
+        window.dbUpdate(jobRef, {
+            agentAssigned: activeName,
+            status: "active",
+            agentConnected: true
+        }).then(() => {
+            // Dashboard and Chat will auto-open via the onValue listeners
+        });
+    }, { onlyOnce: true });
 }
 
 // 2. Finish Job Function
-function finishJob(jobId) {
-    if (!confirm("Are you sure the project is complete? This will prompt the client for final payment.")) return;
+function finishJob(id) {
+    const amount = prompt("Project Finished! Enter the amount the client owes ($):");
+    if (!amount || isNaN(amount)) return;
 
     let pool = JSON.parse(localStorage.getItem("jobPool")) || [];
-    const jobIndex = pool.findIndex(j => j.id == jobId);
-    
-    if (jobIndex !== -1) {
-        pool[jobIndex].status = "completed"; // Trigger payment prompt for client
-        
-        // Add a system message to the chat
-        pool[jobIndex].messages.push({
-            sender: "System",
-            text: "✅ Developer has marked the project as FINISHED. Please complete the final payment to receive your source code.",
-            type: "system",
-            timestamp: Date.now()
-        });
+    const jobIndex = pool.findIndex(j => j.id == id);
 
+    if (jobIndex !== -1) {
+        pool[jobIndex].status = "completed"; // MUST match the check in Step 1
+        pool[jobIndex].finalPrice = amount;
         localStorage.setItem("jobPool", JSON.stringify(pool));
-        closeChat();
-        loadAgentDashboard();
+        
+        alert("Client notified. Payment requested: $" + amount);
+
     }
 }
 
@@ -1491,90 +2164,181 @@ function openLargeChatForAgent(job) {
     const chatBox = document.getElementById("chat-box");
     if (!chatBox) return;
 
-    // Set 80% Size & Position
+    // UI Setup
     chatBox.style.display = "flex";
     chatBox.style.width = "80%";
     chatBox.style.height = "80%";
     chatBox.style.top = "10%";
     chatBox.style.left = "10%";
     
-    // Link the Chat to this specific Job ID
+    // Crucial: Set the Job ID so sendMessage() knows where to push
     chatBox.dataset.activeJobId = job.id;
     
-    // Update UI Elements
-    document.getElementById("chat-agent-name").innerText = "WORKING_WITH: " + job.clientName;
-    
-    // Optional: Clear previous chat history and add a system entry
-    const msgDiv = document.getElementById("chat-messages");
-    if (msgDiv) {
-        msgDiv.innerHTML = ""; 
-        addMessage("System", `Terminal synchronized with ${job.clientName}. Workspace: 80%`, "agent");
+    // Name Logic: Extracting from email to avoid "Killer" or "Unknown"
+    let displayName = job.clientName;
+    if (!displayName || displayName.toLowerCase() === "killer" || displayName === "Unknown") {
+        displayName = job.clientEmail ? job.clientEmail.split('@')[0] : "CLIENT_" + job.id.toString().slice(-4);
     }
+    
+    document.getElementById("chat-agent-name").innerText = "WORKING_WITH: " + displayName.toUpperCase();
+    
+    // Start the real-time cloud listener
+    listenForChatMessages(job.id);
+}
+
+function listenForChatMessages(jobId) {
+    const msgDiv = document.getElementById("chat-messages");
+    if (!msgDiv) return;
+
+    // Point to the exact same path as sendMessage
+    const messagesRef = window.dbRef(window.db, `jobPool/${jobId}/messages`);
+
+    window.dbOnValue(messagesRef, (snapshot) => {
+        const data = snapshot.val();
+        msgDiv.innerHTML = ""; // Clear current view
+
+        if (data) {
+            Object.values(data).forEach(msg => {
+                // Determine if message is 'mine' or 'theirs' for styling
+                const isMe = (currentAgentName || localStorage.getItem("currentAgent")) 
+                             ? msg.role === "agent" 
+                             : msg.role === "client";
+                
+                // Add to UI (using your existing addMessage function)
+                addMessage(msg.sender, msg.text, msg.role);
+            });
+            // Auto-scroll to bottom
+            msgDiv.scrollTop = msgDiv.scrollHeight;
+        }
+    });
 }
 
 function loadAgentDashboard() {
-    const currentPool = JSON.parse(localStorage.getItem("jobPool")) || [];
-    const allAgents = JSON.parse(localStorage.getItem("agents")) || [];
-    
-    // Find the logged-in agent's data
-    const myProfile = allAgents.find(a => a.name === currentAgentName);
-    
+    const activeName = currentAgentName || localStorage.getItem("currentAgent") || "Unknown Agent";
     const dash = document.getElementById("developer-tab");
     if (!dash) return;
 
-    // We use ?. to safely access the field, and || "" as a backup empty string
-    const myField = (myProfile?.field || "").toLowerCase();
+    // 1. INPUT PROTECTION: Prevent UI refresh if the agent is currently typing
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+        return; 
+    }
 
-    let html = `<h2>Terminal: ${currentAgentName} [${myProfile?.field || 'Generalist'}]</h2>`;
+    const jobsRef = window.dbRef(window.db, 'jobPool');
 
-    // --- SAFER FILTERING ---
-    const available = currentPool.filter(j => {
-        // 1. Must be searching
-        if (j.status !== "searching") return false;
+    // 2. REAL-TIME LISTENER: Pulls directly from Cloud
+    window.dbOnValue(jobsRef, (snapshot) => {
+        const data = snapshot.val();
         
-        // 2. If no field is set for the agent, show them everything
-        if (!myField) return true; 
+        // Convert Firebase object to array and include IDs
+        const pool = data ? Object.keys(data).map(key => ({ ...data[key], id: key })) : [];
 
-        // 3. Check if job.module exists before calling toLowerCase
-        const jobModule = (j.module || "").toLowerCase();
-        return jobModule.includes(myField);
-    });
+        // Start Building HTML
+        let html = `
+            <button onclick="developerLogout()" style="float:right; margin-bottom:15px; background:none; border:1px solid #ff4444; color:#ff4444; cursor:pointer; padding:5px 10px; border-radius:5px;">LOGOUT TERMINAL</button>
+            <div style="padding:20px;">
+            <h2>Terminal: ${activeName}</h2>`;
 
-    html += `<h3>📡 Available Requests (${myProfile?.field || "All"})</h3>`;
-    
-    if (available.length === 0) {
-        html += `<p style="opacity:0.5; padding:20px;">No signals matching your frequency...</p>`;
-    } else {
-        available.forEach(j => {
-            html += `
-                <div class="job-card" style="border-left: 4px solid #f59e0b; background: #1e293b; padding: 15px; margin-bottom: 10px;">
-                    <p><strong>${j.module || "General Project"}</strong></p>
-                    <p style="font-size:0.8rem; opacity:0.7;">${j.description || "No description provided."}</p>
-                    <button onclick="acceptJob(${j.id})" class="join-btn" style="margin-top:10px;">ACCEPT_SIGNAL</button>
-                </div>`;
-        });
-    }
+        // --- SECTION 1: DIRECTIVE FROM ADMIN ---
+        const internalMessages = pool.filter(j => j.type === "internal" && j.agentAssigned === activeName);
+        if (internalMessages.length > 0) {
+            html += `<h3 style="margin-top:20px; color:#ff00ff; letter-spacing:1px;">📡 DIRECTIVE FROM ADMIN</h3>`;
+            internalMessages.forEach(msg => {
+                html += `
+                    <div style="background:rgba(255, 0, 255, 0.05); padding:15px; border-radius:10px; margin-bottom:15px; border:1px solid #ff00ff; display:flex; justify-content:space-between; align-items:center;">
+                        <p style="margin:0; color:white;"><strong>HQ SECURE LINE</strong></p>
+                        <button onclick='openLargeChatForAgent(${JSON.stringify(msg).replace(/"/g, '&quot;')})' 
+                                style="background:#ff00ff; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">OPEN COMMS</button>
+                    </div>`;
+            });
+        }
 
-    // --- ACTIVE CLIENTS SECTION ---
-    html += `<h3 style="margin-top:30px; color:#00bcd4;">👤 My Active Pipelines</h3>`;
-    const myJobs = currentPool.filter(j => j.agentAssigned === currentAgentName);
-    
-    if (myJobs.length === 0) {
-        html += `<p style="opacity:0.5;">No active links established.</p>`;
-    } else {
+        // --- SECTION 2: AVAILABLE REQUESTS (THE RADAR) ---
+        const available = pool.filter(j => j.status === "searching");
+        html += `<h3 style="margin-top:30px; color:#f59e0b;">📡 Available Requests (${available.length})</h3>`;
+        
+        if (available.length === 0) {
+            html += `<p style="opacity:0.5; padding:20px; border:1px dashed #444; text-align:center;">No active signals...</p>`;
+        } else {
+            available.forEach(j => {
+                html += `
+                    <div class="job-card" style="border-left: 4px solid #f59e0b; background: #1e293b; padding: 15px; margin-bottom: 10px; border-radius:8px;">
+                        <h4 style="margin:0; color:white;">${j.clientName || 'New Client'}</h4>
+                        <p style="font-size:0.7rem; color:#f59e0b; font-weight:bold; margin:4px 0;">TASK: ${j.module}</p>
+                        <p style="font-size:0.85rem; color:#94a3b8; margin-top:8px;">${j.description}</p>
+                        <button onclick="acceptJob('${j.id}')" class="join-btn" style="margin-top:10px; background:#f59e0b; color:black; width:100%; font-weight:bold;">ACCEPT_SIGNAL</button>
+                    </div>`;
+            });
+        }
+
+        // --- SECTION 3: MY ACTIVE CLIENTS ---
+        const myJobs = pool.filter(j => j.agentAssigned === activeName && (j.status === 'active' || j.status === 'completed'));
+        html += `<h3 style="margin-top:40px; color:#00bcd4;">👤 My Active Clients</h3>`;
+        
+        if (myJobs.length === 0) {
+            html += `<p style="opacity:0.5; text-align:center; padding:20px;">No active clients in terminal.</p>`;
+        }
+
         myJobs.forEach(j => {
+            const isCompleted = j.status === 'completed';
             html += `
-                <div style="background:#0f172a; padding:15px; border-radius:8px; margin-bottom:10px; border:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                        <p><strong>${j.clientName}</strong></p>
-                        <p style="font-size:0.7rem; color:#64748b;">${j.module}</p>
+                <div style="background:#0f172a; padding:18px; border-radius:12px; margin-bottom:15px; border:1px solid #1e293b; border-left: 5px solid ${isCompleted ? '#25D366' : '#00bcd4'};">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 12px;">
+                        <div style="flex:1; padding-right:10px;">
+                            <h4 style="margin:0; color:white; font-size:1.1rem;">${j.clientName || 'Client'}</h4>
+                            <p style="font-size:0.7rem; color:#00bcd4; margin:4px 0; font-weight:bold; text-transform:uppercase;">TASK: ${j.module}</p>
+                            <p style="font-size:0.85rem; color:#94a3b8; margin-top:10px; line-height:1.4;">${j.description || 'No description.'}</p>
+                        </div>
+                        <button onclick='openLargeChatForAgent(${JSON.stringify(j).replace(/"/g, '&quot;')})' 
+                                style="background:#00bcd4; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">CHAT</button>
                     </div>
-                    <button onclick="openLargeChatForAgent(${JSON.stringify(j).replace(/"/g, '&quot;')})" class="join-btn" style="background:#00bcd4; width:auto; padding:5px 15px;">CHAT</button>
+                    ${!isCompleted ? `
+    <div style="border-top: 1px solid #1e293b; padding-top: 15px; margin-top: 10px;">
+        <label style="color:#25D366; font-size:0.7rem; font-weight:bold; display:block; margin-bottom:5px;">SET PROJECT BILLING (KES):</label>
+        <input type="number" id="price-${j.id}" placeholder="Enter amount (e.g. 2500)" 
+               style="width:100%; padding:10px; border-radius:5px; border:1px solid #25D366; background:#1e293b; color:white; font-size: 0.8rem; margin-bottom:10px;">
+        
+        <label style="color:#94a3b8; font-size:0.7rem; font-weight:bold; display:block; margin-bottom:5px;">PROJECT SOURCE LINK:</label>
+        <input type="text" id="url-${j.id}" placeholder="Paste Project ZIP/URL here..." 
+               style="width:100%; padding:10px; border-radius:5px; border:1px solid #334155; background:#1e293b; color:white; font-size: 0.8rem;">
+        
+        <button onclick="submitToAdmin('${j.id}')" 
+               style="width: 100%; margin-top:10px; background:#25D366; color:white; border:none; padding:12px; border-radius:5px; cursor:pointer; font-weight:bold; text-transform:uppercase;">
+            SUBMIT TO HQ
+        </button>
+    </div>
+                    ` : `
+                        <div style="text-align:center; padding: 12px; background: rgba(37, 211, 102, 0.1); border-radius: 8px;">
+                            <p style="color:#25D366; font-size:0.75rem; margin:0; font-weight:bold;">✅ SUBMITTED - PENDING HQ REVIEW</p>
+                        </div>
+                    `}
                 </div>`;
         });
-    }
 
-    dash.innerHTML = html;
+        html += `</div>`; 
+
+        // Update DOM only if content changed to save performance
+        if (dash.innerHTML !== html) {
+            dash.innerHTML = html;
+        }
+    });
+}
+
+// Function for Agent to send link to Admin
+function submitToAdmin(id) {
+    const urlValue = document.getElementById(`url-${id}`).value;
+    const priceValue = document.getElementById(`price-${id}`).value; // Get price
+
+    if (!urlValue) return alert("Please paste the project link!");
+    if (!priceValue || priceValue <= 0) return alert("Please set a valid price for the project!");
+
+    const jobRef = window.dbRef(window.db, `jobPool/${id}`);
+    window.dbUpdate(jobRef, {
+        status: "completed",
+        downloadUrl: urlValue,
+        amount: priceValue  // Saves the amount the agent typed
+    }).then(() => {
+        alert("Project submitted for HQ Review with billing: KES " + priceValue);
+    });
 }
 
 // Shortcut for Agent to accept and immediately open 80% chat
@@ -1584,113 +2348,172 @@ function agentAcceptAndChat(jobId) {
 }
 
 function openChatWithClient(jobId) {
-    // 1. Find the job in the pool
-    const currentPool = JSON.parse(localStorage.getItem("jobPool")) || [];
-    const job = currentPool.find(j => j.id == jobId);
+    const chatBox = document.getElementById("chat-box");
+    if (!chatBox) return;
 
-    if (!job) {
-        alert("Error: Job not found.");
+    // 1. Show the box and tag it with the ID
+    chatBox.style.display = "flex";
+    chatBox.dataset.activeJobId = jobId;
+    window.currentChatJobId = jobId; // Global sync
+
+    // 2. Fetch job info from Firebase
+    const jobRef = window.dbRef(window.db, `jobPool/${jobId}`);
+    
+    window.dbOnValue(jobRef, (snapshot) => {
+        const job = snapshot.val();
+        if (!job) return;
+
+        // 3. Update Header
+        const header = document.getElementById("chat-agent-name");
+        if (header) header.innerText = "Chatting with: " + job.clientName;
+
+        // 4. Load the actual message history from Firebase
+        if (typeof renderMessages === "function") {
+            renderMessages(jobId);
+        }
+    }, { onlyOnce: true });
+}
+
+// Inside your developer login success function:
+// 1. Declare the global variable first
+let currentAgentName = localStorage.getItem("currentAgent") || null;
+
+// 2. Define the function
+function startNotificationListener() {
+    // Fallback check: if the global is null, try to grab it from storage again
+    const activeName = currentAgentName || localStorage.getItem("currentAgent");
+    
+    if (!activeName) {
+        console.log("Notification Listener: No active agent found. Standby.");
         return;
     }
 
-    // 2. Show the chat box
-    const chatBox = document.getElementById("chat-box");
-    if (chatBox) {
-        chatBox.style.display = "flex";
-    }
+    console.log("Notification Listener: Active for agent " + activeName);
+    const jobsRef = window.dbRef(window.db, 'jobPool');
 
-    // 3. Update the Chat Header with the Client's Name
-    const header = document.getElementById("chat-agent-name");
-    if (header) {
-        header.innerText = "Chatting with: " + job.clientName;
-    }
+    window.dbOnValue(jobsRef, (snapshot) => {
+        const pool = snapshot.val();
+        if (!pool) return;
 
-    // 4. Store the current active Job ID on the chat box for reference
-    chatBox.dataset.activeJobId = jobId;
+        Object.keys(pool).forEach(id => {
+            const job = pool[id];
+            
+            if (job.agentAssigned === activeName && job.clientConnected === true && job.agentNotified === false) {
+                new Audio('https://www.soundjay.com/buttons/sounds/button-3.mp3').play().catch(()=>{});
+                console.log(`Notification: ${job.clientName} is active.`);
 
-    // 5. Clear and Load messages (Simulated for now)
-    const msgDiv = document.getElementById("chat-messages");
-    msgDiv.innerHTML = `<div style="text-align:center; opacity:0.5; font-size:0.7rem;">System: Secure line established for ${job.module}</div>`;
+                const notifyRef = window.dbRef(window.db, `jobPool/${id}`);
+                window.dbUpdate(notifyRef, { agentNotified: true });
+            }
+        });
+    });
+}
+
+function markClientActive(jobId) {
+    const jobRef = window.dbRef(window.db, `jobPool/${jobId}`);
     
-    // Add an initial prompt if it's the first time
-    addMessage(job.agentAssigned, "Hello " + job.clientName + ", I'm ready to start. What specific details should we finalize?", "agent");
+    // Tell the agent we are here
+    window.dbUpdate(jobRef, {
+        clientConnected: true,
+        agentNotified: false, // Reset this so the agent gets a fresh alert
+        lastActiveClient: localStorage.getItem("currentUserEmail")?.split('@')[0] || "Client"
+    });
 }
 
 function sendMessage() {
-    const chatBox = document.getElementById("chat-box");
-    const jobId = chatBox.dataset.activeJobId;
+    const chatBox = document.getElementById("chat-box") || document.getElementById("chat-modal");
+    const jobId = chatBox.dataset.activeJobId || window.currentChatJobId;
     const input = document.getElementById("chat-input");
     const text = input.value.trim();
 
     if (text !== "" && jobId) {
-        let pool = JSON.parse(localStorage.getItem("jobPool")) || [];
-        const jobIndex = pool.findIndex(j => j.id == jobId);
+        const messagesRef = window.dbRef(window.db, `jobPool/${jobId}/messages`);
         
-        if (jobIndex === -1) return;
+        // --- SECURE NAME LOGIC ---
+        let senderName;
+        // Check ONLY for the agent session specifically
+        const agentSession = localStorage.getItem("currentAgent");
 
-        // Create the message object
+        if (agentSession) {
+            senderName = agentSession; // The Agent's name
+        } else {
+            const email = localStorage.getItem("currentUserEmail") || "User";
+            senderName = email.split('@')[0].toUpperCase(); // The Client's name
+        }
+
         const newMessage = {
-            sender: currentAgentName ? currentAgentName : "Client",
+            sender: senderName,
             text: text,
-            type: currentAgentName ? "agent" : "client",
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            role: agentSession ? "agent" : "client" 
         };
 
-        // Push to database
-        if (!pool[jobIndex].messages) pool[jobIndex].messages = [];
-        pool[jobIndex].messages.push(newMessage);
+        console.log("Sending signal from:", senderName); // Verify here!
 
-        // Save back to localStorage
-        localStorage.setItem("jobPool", JSON.stringify(pool));
-
-        input.value = "";
-        
-        // Immediately render so the sender sees it
-        renderMessages(jobId);
+        window.dbPush(messagesRef, newMessage).then(() => {
+            input.value = ""; 
+        }).catch(err => {
+            console.error("Transmission failed:", err);
+        });
     }
 }
 
 function renderMessages(jobId) {
     const msgDiv = document.getElementById("chat-messages");
-    const pool = JSON.parse(localStorage.getItem("jobPool")) || [];
-    const job = pool.find(j => j.id == jobId);
+    if (!msgDiv) return;
 
-    if (!job || !job.messages) return;
+    const messagesRef = window.dbRef(window.db, `jobPool/${jobId}/messages`);
+    
+    // Listen for cloud changes
+    window.dbOnValue(messagesRef, (snapshot) => {
+        const data = snapshot.val();
+        msgDiv.innerHTML = ""; 
 
-    let chatHTML = "";
-    job.messages.forEach(msg => {
-        // LOGIC: Is the message FROM the person looking at this tab?
-        // If I'm an Agent and the message type is 'agent', it's "Me".
-        // If I'm a Client (currentAgentName is null) and message type is 'client', it's "Me".
-        const isMe = (currentAgentName && msg.type === "agent") || (!currentAgentName && msg.type === "client");
-        
-        const style = isMe ? 
-            "align-self: flex-end; background:#1e293b; border: 1px solid #00bcd4;" : 
-            "align-self: flex-start; background:#00bcd4; color:white;";
-
-        chatHTML += `
-            <div style="max-width:75%; padding:10px 15px; border-radius:15px; margin: 5px 0; ${style}">
-                <div style="font-size:0.6rem; opacity:0.7; margin-bottom:3px; font-weight:bold;">${isMe ? "ME" : msg.sender}</div>
-                <div style="word-wrap: break-word;">${msg.text}</div>
-            </div>
-        `;
+        if (data) {
+            Object.keys(data).forEach(key => {
+                const m = data[key];
+                
+                // Logic: If I am the agent and the message is from an agent, it's 'user' (right side)
+                // If I am the client and message is from client, it's 'user' (right side)
+                const amIAgent = !!(currentAgentName || localStorage.getItem("currentAgent"));
+                const isMyMessage = amIAgent ? (m.role === "agent") : (m.role === "client");
+                
+                const bubbleType = isMyMessage ? "user" : "agent";
+                addMessage(m.sender, m.text, bubbleType);
+            });
+            msgDiv.scrollTop = msgDiv.scrollHeight;
+        } else {
+            msgDiv.innerHTML = "<div style='text-align:center; opacity:0.5; font-size:0.8rem;'>Secure line established. No messages yet.</div>";
+        }
     });
-
-    msgDiv.innerHTML = chatHTML;
-    msgDiv.scrollTop = msgDiv.scrollHeight;
 }
 
-function addMessage(sender, text, type) {
+function addMessage(sender, text, role) {
     const msgDiv = document.getElementById("chat-messages");
-    const alignment = type === "client" ? "align-self: flex-end; background:#1e293b;" : "align-self: flex-start; background:#00bcd4; color:white;";
+    const messageElement = document.createElement("div");
+
+    // Check if the current user is an agent or client
+    const amIAgent = localStorage.getItem("currentAgent");
     
-    msgDiv.innerHTML += `
-        <div style="max-width:80%; padding:8px 12px; border-radius:10px; ${alignment}">
-            <div style="font-size:0.7rem; opacity:0.7; margin-bottom:3px;">${sender}</div>
-            ${text}
-        </div>
+    // Logic: If the message role matches the current user's role, it's "mine"
+    const isMine = amIAgent ? (role === "agent") : (role === "client");
+
+    messageElement.style = `
+        margin: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 70%;
+        ${isMine ? "align-self: flex-end; background: #00bcd4; color: black;" : "align-self: flex-start; background: #1e293b; color: white; border: 1px solid #334155;"}
     `;
-    msgDiv.scrollTop = msgDiv.scrollHeight; // Auto-scroll to bottom
+
+    // Display the sender's name correctly
+    messageElement.innerHTML = `
+        <small style="display:block; font-size:0.6rem; opacity:0.7; margin-bottom:4px;">${sender}</small>
+        <span>${text}</span>
+    `;
+
+    msgDiv.appendChild(messageElement);
+    msgDiv.scrollTop = msgDiv.scrollHeight;
 }
 
 function closeChat() {
@@ -1705,16 +2528,32 @@ function saveAll() {
 }
 
 function confirmPayment() {
-    let pool = JSON.parse(localStorage.getItem("jobPool")) || [];
-    const jobIndex = pool.findIndex(j => j.id == clientJobId);
+    const email = localStorage.getItem("currentUserEmail");
+    const desc = document.getElementById("project-desc").value;
+    if (!email) return showAuthPrompt();
 
-    if (jobIndex !== -1) {
-        pool[jobIndex].status = "paid_pending_delivery";
-        localStorage.setItem("jobPool", JSON.stringify(pool));
-        alert("Payment signal sent! Admin is verifying the M-Pesa transaction. Please stay on this page.");
-    }
-    closeMpesa();
+    const jobData = {
+        clientEmail: email,
+        clientName: email.split('@')[0],
+        description: desc,
+        module: currentModule || "Web App",
+        status: "searching",
+        timestamp: Date.now(),
+        messages: {
+            "initial": { sender: "System", text: "Project initialized in Cloud.", type: "agent" }
+        }
+    };
+
+    const newJobRef = window.dbPush(window.dbRef(window.db, 'jobPool'));
+    window.dbSet(newJobRef, jobData).then(() => {
+        alert("Payment Confirmed. Searching for a Developer...");
+        closeMpesa();
+        // Start the logic to show the "Radar" screen
+        document.getElementById("searching-overlay").style.display = "flex";
+        startStatusCheck(newJobRef.key); // Watch for an agent to accept
+    });
 }
+
 function closeMpesa() { document.getElementById("mpesa-modal").style.display = "none"; }
 
 function openAdminLogin() { document.getElementById("admin-login").style.display = "flex"; }
@@ -1735,106 +2574,106 @@ window.onload = () => {
         loadAdminData();
     }
 };
+
 // --- MATRIX LOADING SCREEN ---
 window.addEventListener('load', () => {
     const canvas = document.getElementById('matrix-canvas');
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const columns = canvas.width / 14;
-    const drops = Array(Math.floor(columns)).fill(1);
+    canvas.width = window.innerWidth; 
+    canvas.height = window.innerHeight;
+    const drops = Array(Math.floor(canvas.width / 14)).fill(1);
 
     function draw() {
-    // Make the fade trail slightly lighter so it's visible
-    ctx.fillStyle = 'rgba(2, 6, 23, 0.1)'; 
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Brighter green/blue for the characters
-    ctx.fillStyle = '#00f2ff'; 
-    ctx.font = '14px monospace'; // Make font slightly bigger
-    
-    drops.forEach((y, i) => {
-        const text = Math.floor(Math.random() * 2);
-        ctx.fillText(text, i * 14, y * 14);
-        
-        if (y * 14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-    });
-}
+        ctx.fillStyle = 'rgba(2, 6, 23, 0.1)'; 
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00f2ff'; 
+        ctx.font = '14px monospace';
+        drops.forEach((y, i) => {
+            const text = Math.floor(Math.random() * 2);
+            ctx.fillText(text, i * 14, y * 14);
+            if (y * 14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }
+
     const matrixInt = setInterval(draw, 50);
+
     setTimeout(() => {
-        document.getElementById('splash-screen').style.display = 'none';
+        const splash = document.getElementById('splash-screen');
+        if (splash) splash.style.display = 'none';
         document.body.style.overflow = 'auto';
         clearInterval(matrixInt);
+        
+        // Final Handshake: Check login and start cloud syncing
+        autoCheckLogin(); 
+        startGlobalCloudListener(); 
     }, 3500);
 });
 
-setInterval(() => {
-    // ... your existing code for Admin/Agent dashboard sync ...
+function startGlobalCloudListener() {
+    const jobsRef = window.dbRef(window.db, 'jobPool');
 
-    // CHAT SYNC: If the chat box is open, get the latest messages
-    const chatBox = document.getElementById("chat-box");
-    if (chatBox && chatBox.style.display === "flex") {
-        const activeId = chatBox.dataset.activeJobId;
-        if (activeId) {
-            renderMessages(activeId);
+    window.dbOnValue(jobsRef, (snapshot) => {
+        const pool = snapshot.val();
+        if (!pool) return;
+
+        // A. Update Admin Panel if open
+        const adminPanel = document.getElementById("admin-panel");
+        if (adminPanel && window.getComputedStyle(adminPanel).display !== "none") {
+            if (typeof loadAdminData === "function") loadAdminData();
         }
-    }
-}, 2000); // Set to 2 seconds for faster feel
 
-setInterval(() => {
-    // 1. Sync Admin Dashboard if open
-    if (document.getElementById("admin-panel")?.style.display === "block") {
-        loadAdminData(); 
-    }
+        // B. Update Agent Dashboard if open
+        const devTab = document.getElementById("developer-tab");
+        if (devTab && window.getComputedStyle(devTab).display !== "none") {
+            loadAgentDashboard(); 
+        }
 
-    // 2. Sync Agent Dashboard if open
-    if (document.getElementById("developer-tab")?.style.display === "block" && currentAgentName) {
-        loadAgentDashboard();
-    }
-
-    // 3. Sync Client Search (Only if they are waiting)
-    const overlay = document.getElementById("searching-overlay");
-    if (overlay && overlay.style.display === "flex" && clientJobId) {
-        const pool = JSON.parse(localStorage.getItem("jobPool")) || [];
-        const myJob = pool.find(j => j.id == clientJobId);
+        // C. Client Status Updates (Approval / Delivery)
+        const activeId = localStorage.getItem("activeClientJobId");
+        if (activeId && pool[activeId]) {
+            const currentJob = pool[activeId];
+            
+            // If Admin approved the project while client is watching
+            if (currentJob.status === "delivered" && !currentJob.clientAcknowledged) {
+                if (typeof addMessage === 'function') {
+                    addMessage("System", "🚀 PROJECT APPROVED! Download available in 'Your Services'.", "agent");
+                }
+                // Update local UI to show download buttons
+                if (typeof renderMyOrders === "function") renderMyOrders();
+            }
+        }
         
-        if (myJob && myJob.status === "active") {
-            openChatForCustomer(myJob);
-            clientJobId = null; // Stop checking once matched
+        // D. Services Tab Sync
+        const servicesTab = document.getElementById("services-module");
+        if (servicesTab && servicesTab.style.display !== "none") {
+            if (typeof renderMyOrders === "function") renderMyOrders();
         }
-    }
-}, 3000);
-
-// Client-side check for completion
-if (clientJobId) {
-    const pool = JSON.parse(localStorage.getItem("jobPool")) || [];
-   const myJob = pool.find(j => j.id == clientJobId);
-
-if (myJob && myJob.status === "delivered") {
-    // Show a Success Overlay
-    document.body.innerHTML = `
-        <div style="height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#020617; color:white; text-align:center; font-family:sans-serif;">
-            <h1 style="color:#00bcd4;">🚀 PROJECT DELIVERED!</h1>
-            <p>Your payment has been verified. You can now download your full source code and documentation.</p>
-            <a href="${myJob.finalLink}" target="_blank" style="padding:15px 30px; background:#25D366; color:white; text-decoration:none; border-radius:10px; margin-top:20px; font-weight:bold;">DOWNLOAD SOURCE CODE (.ZIP)</a>
-            <p style="margin-top:20px; opacity:0.5;">Thank you for using Ainsoft Tech.</p>
-            <button onclick="location.reload()" style="background:none; border:1px solid #334155; color:white; margin-top:40px; cursor:pointer;">Back to Home</button>
-        </div>
-    `;
-    clientJobId = null; // Exit the loop
+    });
 }
 
-// 1. Listen for the 'Enter' key specifically on the chat input
-document.getElementById("chat-input").addEventListener("keypress", function(event) {
-    // Check if the key pressed was 'Enter'
-    if (event.key === "Enter") {
-        // Prevent the default behavior (like adding a new line)
-        event.preventDefault();
-        
-        // Trigger your existing sendMessage function
-        sendMessage();
+function autoCheckLogin() {
+    const activeEmail = localStorage.getItem("currentUserEmail");
+    if (!activeEmail) {
+        if (typeof showAuthPrompt === "function") {
+            showAuthPrompt();
+            // Optional: Remove the "Cancel" button to force login
+            const cancelBtn = document.querySelector("#auth-modal button[onclick*='none']");
+            if (cancelBtn) cancelBtn.style.display = "none";
+        }
     }
-});
+}
+
+// Input Listener for Chat (Attach once)
+const chatInput = document.getElementById("chat-input");
+if (chatInput) {
+    chatInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
 }
 </script>
 </body>
